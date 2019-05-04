@@ -4,6 +4,7 @@ Docker based ssh backup host with `borg` and `restic` installed. Can be effectiv
 ## Run a backup host and backup a client with `borg`
 
 Run the backup host with this command:
+
     docker run -d \
         --restart always \
         --port 22:22 \
@@ -12,19 +13,23 @@ Run the backup host with this command:
         amdavidson/backup:latest
 
 Add your ssh key to the host:
+
     docker cp id_rsa.pub backup:/bkup/.ssh/authorized_keys
     docker run --volumes-from backup amdavidson/backup-server chown 1111:1111 /bkup/.ssh/authorized_keys
 
 
 Create a repository for backups:
+
     borg init backup:/bkup/client-name
 
 Periodically run a backup with a command similar to this:
+
     borg create --stats --verbose backup:/bkup/client-name::$(date '+%s') ~/
 
 ## Backup a container with `restic`
 
 Create a repository for backups:
+
     docker run \
         --rm \
         --volumes-from backup \
@@ -35,6 +40,7 @@ Create a repository for backups:
         restic -r s3:s3.wasabisys.com/other-container init
 
 Perodically run a backup with a command similar to this:
+
     docker run \
         --rm \
         --volumes-from backup \
@@ -48,6 +54,7 @@ Perodically run a backup with a command similar to this:
 ## Backup a container with `borg`
 
 Create a repository for backups:
+
     docker run \
         --rm \
         --volumes-from backup \
@@ -55,6 +62,7 @@ Create a repository for backups:
         borg init /bkup/other-container
 
 Periodically run a backup with a command similar to this:
+
     docker run \
         --rm \
         --volumes-from backup \
