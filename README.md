@@ -26,7 +26,7 @@ Periodically run a backup with a command similar to this:
 
     borg create --stats --verbose backup:/bkup/client-name::$(date '+%s') ~/
 
-## Backup a container with `restic`
+## Backup a container remotely with `restic`
 
 Create a repository for backups:
 
@@ -51,7 +51,7 @@ Perodically run a backup with a command similar to this:
         amdavidson/backup-server \
         restic -r s3:s3.wasabisys.com/other-container backup /data
 
-## Backup a container with `borg`
+## Backup a container locally with `borg`
 
 Create a repository for backups:
 
