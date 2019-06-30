@@ -3,7 +3,7 @@ Docker based ssh backup host with `borg` and `restic` installed. Can be effectiv
 
 ## Run a backup host and backup a client with `borg`
 
-Run the backup host with this command:
+Start a container on the backup host with this command:
 
     docker run -d \
         --restart always \
@@ -18,7 +18,7 @@ Add your ssh key to the host:
     docker run --volumes-from backup amdavidson/backup-server chown 1111:1111 /bkup/.ssh/authorized_keys
 
 
-Create a repository for backups:
+On the machine to be backed up run this to create a repository for backups:
 
     borg init backup:/bkup/client-name
 
@@ -28,7 +28,7 @@ Periodically run a backup with a command similar to this:
 
 ## Backup a container remotely with `restic`
 
-Create a repository for backups:
+On the machine with the container to be backed up, create a repository for backups:
 
     docker run \
         --rm \
@@ -53,7 +53,7 @@ Perodically run a backup with a command similar to this:
 
 ## Backup a container locally with `borg`
 
-Create a repository for backups:
+On the machine with a container to be backed up, create a repository for backups:
 
     docker run \
         --rm \
