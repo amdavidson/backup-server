@@ -7,7 +7,7 @@ Start a container on the backup host with this command:
 
     docker run -d \
         --restart always \
-        --port 22:22 \
+        --publish 2222:22 \
         --volume /mnt/backup:/bkup \
         --name backup \
         amdavidson/backup:latest
@@ -53,10 +53,10 @@ Perodically run a backup with a command similar to this:
 
 ## Backup a container locally with `borg`
 
-On the machine with a container to be backed up, create a repository for backups:
+On the machine with a container to be backed up, create a repository for backups (entering the encryption password when requested):
 
     docker run \
-        --rm \
+        --rm -it \
         --volumes-from backup \
         amdavidson/backup-server \
         borg init /bkup/other-container
@@ -67,6 +67,7 @@ Periodically run a backup with a command similar to this:
         --rm \
         --volumes-from backup \
         --volumes-from other-container:ro \
+        --env BORG_PASSPHRASE="mySecr3t" \
         amdavidson/backup-server \
         borg create --verbose --stats /bkup/other-container::$(date '+%s') /data
 
