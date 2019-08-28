@@ -15,6 +15,7 @@ RUN mkdir -p /bkup/.ssh \
 && chown -Rh bkup:bkup /bkup
 
 VOLUME /bkup
+VOLUME /etc
 
 EXPOSE 22
 
