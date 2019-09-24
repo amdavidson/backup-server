@@ -29,5 +29,5 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           # we push latest separate so it shows up as latest in the UI
-          docker tag eb:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:latest
+          docker tag backup-server:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:latest
           docker push docker.pkg.github.com/amdavidson/backup-server/backup-server:latest
