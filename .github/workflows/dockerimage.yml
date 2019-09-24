@@ -25,8 +25,6 @@ jobs:
           docker tag backup-server:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:${GITHUB_SHA:0:39}
     - name: Push the Docker image
         run: docker push docker.pkg.github.com/amdavidson/backup-server/backup-server
-    - name: Push the Docker image
-        run: docker push docker.pkg.github.com/amdavidson/backup-server/backup-server:${{ github.sha }}
     - name: Tag latest if master
         if: github.ref == 'refs/heads/master'
         run: |
