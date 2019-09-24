@@ -15,4 +15,5 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag backup-server:${{ github.sha }}
+    - name: Push the Docker image
       run: docker push docker.pkg.github.com/amdavidson/backup-server/backup-server:${{ github.sha }}
