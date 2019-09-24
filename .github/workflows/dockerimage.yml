@@ -16,18 +16,18 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag backup-server:latest
     - name: Login to GitHub Package Repository
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_PAT }}
-        run: docker login docker.pkg.github.com -u amdavidson -p ${GH_TOKEN}
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_PAT }}
+      run: docker login docker.pkg.github.com -u amdavidson -p ${GH_TOKEN}
     - name: Tag the Docker image
-        run: |
-          docker tag backup-server:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:$(date +%s)
-          docker tag backup-server:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:${GITHUB_SHA:0:39}
+      run: |
+        docker tag backup-server:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:$(date +%s)
+        docker tag backup-server:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:${GITHUB_SHA:0:39}
     - name: Push the Docker image
       run: docker push docker.pkg.github.com/amdavidson/backup-server/backup-server
     - name: Tag latest if master
-        if: github.ref == 'refs/heads/master'
-        run: |
-          # we push latest separate so it shows up as latest in the UI
-          docker tag backup-server:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:latest
-          docker push docker.pkg.github.com/amdavidson/backup-server/backup-server:latest
+      if: github.ref == 'refs/heads/master'
+      run: |
+        # we push latest separate so it shows up as latest in the UI
+        docker tag backup-server:latest docker.pkg.github.com/amdavidson/backup-server/backup-server:latest
+        docker push docker.pkg.github.com/amdavidson/backup-server/backup-server:latest
